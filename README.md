@@ -1,5 +1,4 @@
 # DEV.F-EXT_FRONTEND-Modulo1_Introduccion-a-JavaScript
-
 Reto de la clase "Introduccion a JavaScript" del Master de desarrollo Web con IA de DEV.F
 
 ## Descripcion del Proyecto
@@ -30,5 +29,7 @@ O bien, puedes incluirlos en un archivo HTML y ver los resultados en la consola 
 - Node.js (para ejecucion en terminal)
 
 ## Autor
+Ricardo Aguilar
 
-Proyecto creado como parte del Master en Desarrollo Web con IA - DEV.F
+
+
