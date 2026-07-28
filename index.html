@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modulo 1 - Introduccion a JavaScript | DEV.F</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Modulo 1: Introduccion a JavaScript</h1>
+        <p class="subtitle">DEV.F - Master en Desarrollo Web con IA</p>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>Tipos de Datos en JavaScript</h2>
+            <p>Ejecuta el archivo <code>tipos-de-dato.js</code> y observa la salida en la consola del navegador (F12).</p>
+            <div class="console-output" id="output-tipos"></div>
+        </section>
+
+        <section class="card">
+            <h2>Variables y Operadores</h2>
+            <p>Ejecuta el archivo <code>variables-y-operadores.js</code> y observa la salida en la consola del navegador (F12).</p>
+            <div class="console-output" id="output-variables"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Abre la consola del navegador (<kbd>F12</kbd> &rarr; Console) para ver la salida original de los scripts.</p>
+        <p>&copy; 2026 - Proyecto creado como parte del Master en Desarrollo Web con IA - DEV.F</p>
+    </footer>
+
+    <!-- Interceptor para capturar console.log y mostrarlo en la pagina -->
+    <script>
+        (function() {
+            const originalLog = console.log;
+            let currentTarget = null;
+
+            function setTarget(elementId) {
+                currentTarget = document.getElementById(elementId);
+            }
+
+            // Override console.log para capturar la salida
+            console.log = function(...args) {
+                originalLog.apply(console, args);
+                if (currentTarget) {
+                    const line = document.createElement('div');
+                    line.classList.add('log-line');
+                    const text = args.map(arg => {
+                        if (arg === null) return 'null';
+                        if (arg === undefined) return 'undefined';
+                        if (typeof arg === 'symbol') return arg.toString();
+                        if (typeof arg === 'object') return JSON.stringify(arg);
+                        return String(arg);
+                    }).join(' ');
+
+                    // Estilizar lineas de encabezado
+                    if (text.includes('===') || text.includes('---')) {
+                        line.classList.add('log-header');
+                    } else if (text.startsWith('Tipo:')) {
+                        line.classList.add('log-type');
+                    }
+
+                    line.textContent = text;
+                    currentTarget.appendChild(line);
+                }
+            };
+
+            // Ejecutar tipos-de-dato.js
+            setTarget('output-tipos');
+            const script1 = document.createElement('script');
+            script1.src = 'tipos-de-dato.js';
+            script1.onload = function() {
+                // Ejecutar variables-y-operadores.js despues
+                setTarget('output-variables');
+                const script2 = document.createElement('script');
+                script2.src = 'variables-y-operadores.js';
+                document.body.appendChild(script2);
+            };
+            document.body.appendChild(script1);
+        })();
+    </script>
+</body>
+</html>
