@@ -150,6 +150,64 @@ footer kbd {
     background-color: #484f58;
 }
 
+/* ============================================
+   SECCION INTERACTIVA - VALIDADOR DE TIPO
+   ============================================ */
+
+.card-interactive {
+    border: 1px solid #e94560;
+    background: linear-gradient(135deg, #16213e 0%, #1a1a3e 100%);
+}
+
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.input-dato {
+    width: 100%;
+    padding: 0.85rem 1.2rem;
+    font-size: 1rem;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    background-color: #0d1117;
+    border: 2px solid #30363d;
+    border-radius: 8px;
+    color: #e0e0e0;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-dato:focus {
+    border-color: #e94560;
+    box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.15);
+}
+
+.input-dato::placeholder {
+    color: #6e7681;
+    font-style: italic;
+}
+
+.resultado-tipo {
+    padding: 0.85rem 1.2rem;
+    font-size: 1.05rem;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-weight: 600;
+    color: #f5c842;
+    background-color: rgba(245, 200, 66, 0.08);
+    border: 1px solid rgba(245, 200, 66, 0.25);
+    border-radius: 8px;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.resultado-tipo.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* Responsive */
 @media (max-width: 600px) {
     header h1 {
