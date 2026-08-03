@@ -13,6 +13,22 @@
     </header>
 
     <main>
+        <!-- Seccion interactiva: Validador de tipo de dato -->
+        <section class="card card-interactive">
+            <h2>Validador de Tipo de Dato</h2>
+            <p>Ingresa cualquier valor y descubre a que tipo de dato pertenece segun nuestro criterio personalizado.</p>
+            <div class="input-group">
+                <input
+                    type="text"
+                    id="input-dato"
+                    class="input-dato"
+                    placeholder="Escribe algun dato para validar su tipo"
+                    autocomplete="off"
+                >
+            </div>
+            <div id="resultado-tipo" class="resultado-tipo"></div>
+        </section>
+
         <section class="card">
             <h2>Tipos de Datos en JavaScript</h2>
             <p>Ejecuta el archivo <code>tipos-de-dato.js</code> y observa la salida en la consola del navegador (F12).</p>
@@ -30,6 +46,90 @@
         <p>Abre la consola del navegador (<kbd>F12</kbd> &rarr; Console) para ver la salida original de los scripts.</p>
         <p>&copy; 2026 - Proyecto creado como parte del Master en Desarrollo Web con IA - DEV.F</p>
     </footer>
+
+    <!-- Script interactivo: Validador de tipo de dato -->
+    <script>
+        (function() {
+            const input = document.getElementById('input-dato');
+            const resultado = document.getElementById('resultado-tipo');
+
+            // Diccionario de numeros escritos en texto (espanol)
+            const numerosTexto = [
+                'cero', 'uno', 'una', 'dos', 'tres', 'cuatro', 'cinco',
+                'seis', 'siete', 'ocho', 'nueve', 'diez',
+                'once', 'doce', 'trece', 'catorce', 'quince',
+                'dieciseis', 'diecisiete', 'dieciocho', 'diecinueve', 'veinte',
+                'veintiuno', 'veintidos', 'veintitres', 'veinticuatro', 'veinticinco',
+                'veintiseis', 'veintisiete', 'veintiocho', 'veintinueve', 'treinta',
+                'treintayuno', 'treintaydos', 'treintaytres', 'treintaycuatro', 'treintaycinco',
+                'treintayseis', 'treintaysiete', 'treintayocho', 'treintaynueve', 'cuarenta',
+                'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa',
+                'cien', 'ciento', 'doscientos', 'trescientos', 'cuatrocientos',
+                'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos',
+                'mil', 'millon', 'millones'
+            ];
+
+            // Caracteres especiales
+            const specialCharRegex = /^[^a-zA-Z0-9\s]+$/;
+
+            function detectarTipo(valor) {
+                // Si esta vacio no mostrar nada
+                if (valor.trim() === '') return null;
+
+                const valorLower = valor.trim().toLowerCase();
+
+                // 1. Boolean: true/false (sin importar mayusculas/minusculas)
+                if (valorLower === 'true' || valorLower === 'false') {
+                    return 'Boolean';
+                }
+
+                // 2. Boolean Number: exactamente 1 o 0
+                if (valor.trim() === '1' || valor.trim() === '0') {
+                    return 'Boolean Number';
+                }
+
+                // 3. Number: si es un numero valido (enteros, decimales, negativos)
+                if (!isNaN(valor.trim()) && valor.trim() !== '') {
+                    return 'Number';
+                }
+
+                // 4. SpeChar: solo caracteres especiales
+                if (specialCharRegex.test(valor.trim())) {
+                    return 'SpeChar';
+                }
+
+                // 5. Parse Number: numeros escritos como texto
+                // Remover espacios y convertir a minusculas para comparar
+                const palabras = valorLower.replace(/\s+/g, '').split(',');
+                const valorSinEspacios = valorLower.replace(/\s+/g, '');
+                if (numerosTexto.includes(valorSinEspacios)) {
+                    return 'Parse Number';
+                }
+
+                // Tambien verificar si contiene combinaciones como "treinta y dos"
+                const valorSinY = valorLower.replace(/\s+y\s+/g, 'y').replace(/\s+/g, '');
+                if (numerosTexto.includes(valorSinY)) {
+                    return 'Parse Number';
+                }
+
+                // 6. String: cualquier otro texto
+                return 'String';
+            }
+
+            input.addEventListener('input', function() {
+                const valor = input.value;
+                const tipo = detectarTipo(valor);
+
+                if (tipo) {
+                    resultado.textContent = `El dato ingresado es de tipo ${tipo}`;
+                    resultado.classList.add('visible');
+                } else {
+                    resultado.textContent = '';
+                    resultado.classList.remove('visible');
+                }
+            });
+        })();
+    </script>
 
     <!-- Interceptor para capturar console.log y mostrarlo en la pagina -->
     <script>
